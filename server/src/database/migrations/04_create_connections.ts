@@ -12,10 +12,13 @@ export async function up(knex: Knex) {
       .onUpdate('CASCADE')
       .onDelete('CASCADE');
 
-    table.timestamp('created_at').defaultTo('now()').notNullable();
+    table
+      .timestamp('created_at')
+      .defaultTo(knex.raw('CURRENT_TIMESTAMP'))
+      .notNullable();
   });
 }
 
 export async function down(knex: Knex) {
-  return knex.schema.dropTable('class_schedule');
+  return knex.schema.dropTable('connections');
 }
